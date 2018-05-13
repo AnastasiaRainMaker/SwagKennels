@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_news"
+        android:enabled="true"
+        android:icon="@drawable/ic_news"
+        android:title="Swag News"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_dogs"
+        android:enabled="true"
+        android:icon="@drawable/ic_dogs"
+        android:title="Dogs"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_puppies"
+        android:enabled="true"
+        android:icon="@drawable/ic_puppies"
+        android:title="Puppies"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_breeding"
+        android:enabled="true"
+        android:icon="@drawable/ic_breeding"
+        android:title="Breeding"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_shop"
+        android:enabled="true"
+        android:icon="@drawable/ic_shop"
+        android:title="Shop"
+        app:showAsAction="always" />
+</menu>
