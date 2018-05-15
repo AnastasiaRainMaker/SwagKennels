@@ -5,11 +5,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_news"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:theme="@style/ToolbarSandwich"
+        android:background="@color/black">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/logo_toolbar"/>
+
+        <ImageView
+            android:layout_marginEnd="130dp"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_text"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/frame_news"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8">
+        android:layout_weight="1">
 
     </FrameLayout>
 
@@ -18,10 +39,11 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.1"
         android:layout_marginBottom="0dp"
-        android:layout_weight="0.08"
         app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
+
 </LinearLayout>

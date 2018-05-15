@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,11 +19,12 @@ import com.project.swagkennels.fragments.NewsFragment;
 import com.project.swagkennels.fragments.PuppiesFragment;
 import com.project.swagkennels.fragments.ShopFragment;
 
-public class NewsActivity extends AppCompatActivity {
+public class NewsListActivity extends AppCompatActivity {
 
     BottomNavigationViewEx bottomNavigationView;
     FragmentManager fragmentManager;
     Fragment fragment;
+    Toolbar toolbar;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -35,6 +37,8 @@ public class NewsActivity extends AppCompatActivity {
                 .replace(R.id.frame_news, fragment, "newsFragment")
                 .commit();
         setUpBottomNav();
+        toolbar = findViewById(R.id.toolbar_news);
+        setSupportActionBar(toolbar);
     }
 
    public void setUpBottomNav() {
