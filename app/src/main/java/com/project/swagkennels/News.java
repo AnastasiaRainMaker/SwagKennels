@@ -17,6 +17,8 @@ public class News {
         this.youtubeLink = youtubeLink;
     }
 
+    public News() {}
+
     public String getImageLink() {
         return imageLink;
     }

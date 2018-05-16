@@ -10,61 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.project.swagkennels.FireBaseRepository;
 import com.project.swagkennels.News;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.NewsFragmentAdapter;
+import com.project.swagkennels.presenters.NewsPresenter;
+import com.project.swagkennels.presenters.NewsPresenterImpl;
 
 import java.util.ArrayList;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements NewsPresenter.NewsView {
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
     NewsFragmentAdapter adapter;
-    ArrayList<News> newsList;
+    ArrayList<News> newsList = new ArrayList<>();
+    NewsPresenter presenter = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        progressBar = view.findViewById(R.id.progressBarLoading);
-        newsList = new ArrayList<>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-
-        newsList.add(new News(null, "05/13/2018", "I'm the cutest dog ever! I'm the cutest dog ever!\n" +
-                "             I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!", "My link to youtube"));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world. I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "             I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!", "My link to youtube"));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world", "My link to youtube"));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world", null));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world", "My link to youtube"));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world", "My link to youtube"));
-        newsList.add(new News(null, "05/13/2018", "I'm the best puppy in the world. I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "             I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!\n" +
-                "            I'm the cutest dog ever!", null));
-
-        adapter = new NewsFragmentAdapter(newsList, getContext());
-        recyclerView.setAdapter(adapter);
+        setUpViews(view);
+        showProgress(true);
+        presenter = new NewsPresenterImpl(this, new FireBaseRepository());
+        presenter.loadData();
         return view;
     }
 
@@ -72,9 +42,32 @@ public class NewsFragment extends Fragment {
         if (value && progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-
         if (!value && progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    public void setUpViews(View view) {
+        recyclerView = view.findViewById(R.id.recyclerView);
+        progressBar = view.findViewById(R.id.progressBarLoading);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new NewsFragmentAdapter(newsList, getContext());
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void displayData(ArrayList<News> data) {
+        showProgress(false);
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void displayNoData() {
+        showProgress(false);
+        recyclerView.setVisibility(View.INVISIBLE);
+        // todo show textView "no news"
     }
 }
