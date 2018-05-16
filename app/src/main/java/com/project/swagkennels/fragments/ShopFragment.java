@@ -26,9 +26,25 @@ public class ShopFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_shop, container, false);
         itemsList = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(new ShopFragmentAdapter(itemsList));
+        recyclerView.setHasFixedSize(true);
+
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
+
+        recyclerView.setAdapter(new ShopFragmentAdapter(itemsList, getContext()));
 
         return view;
     }
