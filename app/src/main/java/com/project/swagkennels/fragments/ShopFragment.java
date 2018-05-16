@@ -44,7 +44,7 @@ public class ShopFragment extends Fragment {
         itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
         itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
 
-        recyclerView.setAdapter(new ShopFragmentAdapter(itemsList));
+        recyclerView.setAdapter(new ShopFragmentAdapter(itemsList, getContext()));
 
         return view;
     }
