@@ -3,18 +3,33 @@ package com.project.swagkennels.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.project.swagkennels.Item;
 import com.project.swagkennels.R;
+import com.project.swagkennels.adapters.ShopFragmentAdapter;
+
+import java.util.ArrayList;
 
 public class ShopFragment extends Fragment {
+
+    ArrayList<Item> itemsList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop, container, false);
+        View view =  inflater.inflate(R.layout.fragment_shop, container, false);
+        itemsList = new ArrayList<>();
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setAdapter(new ShopFragmentAdapter(itemsList));
+
+        return view;
     }
 }

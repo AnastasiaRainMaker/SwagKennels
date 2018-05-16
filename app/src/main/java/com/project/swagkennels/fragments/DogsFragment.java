@@ -39,7 +39,7 @@ public class DogsFragment extends Fragment {
         dogList.add(new Dog(null, "Milady","Our beautiful dog!"));
         dogList.add(new Dog(null, "Heize","Our beautiful dog!"));
         dogList.add(new Dog(null, "Khalissi","Our beautiful dog!"));
-        dogList.add(new Dog(null, "Swaggy","Our beautiful dog!"));
+        dogList.add(new Dog(null, "Swagy","Our beautiful dog!"));
 
 
         adapter = new DogsFragmentAdapter(dogList, getContext());
