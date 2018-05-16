@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Swagkennels</string>
     <string name="transition_shared_element">shareElement</string>
+    <string name="no_price_str">Price is currently unavailable</string>
 </resources>

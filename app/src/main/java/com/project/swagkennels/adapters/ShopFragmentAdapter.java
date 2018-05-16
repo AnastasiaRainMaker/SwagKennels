@@ -25,15 +25,15 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textViewDescription;
-        TextView titleView;
+        TextView price;
         CardView card;
 
         ViewHolder(View itemView) {
             super(itemView);
-//            this.imageView = itemView.findViewById(R.id.image);
-//            this.textViewDescription = itemView.findViewById(R.id.description);
-//            this.titleView = itemView.findViewById(R.id.title);
-//            this.card = itemView.findViewById(R.id.card);
+            this.imageView = itemView.findViewById(R.id.image);
+            this.textViewDescription = itemView.findViewById(R.id.description);
+            this.price = itemView.findViewById(R.id.price);
+            this.card = itemView.findViewById(R.id.card);
         }
     }
 
@@ -47,7 +47,24 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
     @Override
     public void onBindViewHolder(final ShopFragmentAdapter.ViewHolder holder, final int position) {
         final Item i = items.get(position);
-
+        if (i != null) {
+            if (i.getImageUrl() != null) {
+                //load image here;
+            } else {
+                //handle no url
+                holder.imageView.setBackgroundResource(R.drawable.no_item_image);
+            }
+            if (i.getDescription() != null) {
+                holder.textViewDescription.setText(i.getDescription());
+            } else {
+                holder.textViewDescription.setText(R.string.no_price_str);
+            }
+            if (i.getPrice() != null) {
+                holder.price.setText(i.getPrice());
+            } else {
+                holder.price.setText(R.string.no_price_str);
+            }
+        }
     }
 
     @Override
