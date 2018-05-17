@@ -3,6 +3,7 @@ package com.project.swagkennels;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,19 +12,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+public class DogItemActivity extends AppCompatActivity {
 
-public class NewsItemActivity extends AppCompatActivity {
-
-    Toolbar toolbar;
     ImageView imageView;
+    TextView titleView;
     TextView descriptionView;
-    TextView dateView;
-    TextView youtubeLinkView;
+    Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_item);
+        setContentView(R.layout.activity_dog_item);
         setUpView();
         getNewsInfo();
     }
@@ -52,17 +51,11 @@ public class NewsItemActivity extends AppCompatActivity {
             } else {
                 descriptionView.setText(description);
             }
-            String date = extras.getString("date", null);
-            if (date == null) {
-                dateView.setVisibility(View.GONE);
+            String title = extras.getString("title", null);
+            if (title == null) {
+                titleView.setVisibility(View.GONE);
             } else {
-                dateView.setText(date);
-            }
-            String link = extras.getString("youtubelink", null);
-            if (link == null) {
-                youtubeLinkView.setVisibility(View.GONE);
-            } else {
-                youtubeLinkView.setText(link);
+                titleView.setText(title);
             }
         }
     }
@@ -72,7 +65,6 @@ public class NewsItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         imageView = findViewById(R.id.image);
         descriptionView = findViewById(R.id.description);
-        dateView = findViewById(R.id.date);
-        youtubeLinkView = findViewById(R.id.link);
+        titleView = findViewById(R.id.title);
     }
 }

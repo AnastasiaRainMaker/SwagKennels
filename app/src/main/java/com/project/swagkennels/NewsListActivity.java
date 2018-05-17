@@ -2,10 +2,12 @@ package com.project.swagkennels;
 
 import android.annotation.SuppressLint;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,8 @@ import com.project.swagkennels.fragments.DogsFragment;
 import com.project.swagkennels.fragments.NewsFragment;
 import com.project.swagkennels.fragments.PuppiesFragment;
 import com.project.swagkennels.fragments.ShopFragment;
+
+import java.util.Objects;
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -102,5 +106,25 @@ public class NewsListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_news_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog alertDialog = new AlertDialog.Builder(NewsListActivity.this, R.style.MyDialogTheme).create();
+        alertDialog.setMessage("Do you want to leave?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 }

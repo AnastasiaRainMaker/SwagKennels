@@ -71,7 +71,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<NewsFragmentAdapte
                 public void onClick(View view) {
                     Intent intent = new Intent(context, NewsItemActivity.class);
 
-                  //  intent.putExtra("imageUrl", "");
+                    intent.putExtra("imageUrl", item.getImageLink());
                     intent.putExtra("description", item.getDescription());
                     intent.putExtra("date", item.getDate());
                     intent.putExtra("youtubelink", item.getYoutubeLink());
@@ -92,7 +92,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<NewsFragmentAdapte
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));
-                requestOptions = requestOptions.error(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.black)));
+                requestOptions = requestOptions.error(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.colorPrimary)));
                 requestOptions = requestOptions.centerCrop();
 
                 Glide.with(holder.imageView.getContext())

@@ -14,6 +14,7 @@ public class Dog {
         this.description = description;
     }
 
+    public Dog() {};
 
     public String getImageUrl() {
         return imageUrl;
