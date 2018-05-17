@@ -1,5 +1,6 @@
 package com.project.swagkennels.presenters;
 
+import com.project.swagkennels.FireBaseRepository;
 import com.project.swagkennels.FireBaseRepositoryImpl;
 import com.project.swagkennels.pojo.News;
 import java.util.ArrayList;
@@ -7,9 +8,9 @@ import java.util.ArrayList;
 public class NewsPresenterImpl implements NewsPresenter, NewsPresenter.NewsCallbacks {
 
     private NewsView view;
-    private FireBaseRepositoryImpl fireBaseRepositoryImpl;
+    private FireBaseRepository fireBaseRepositoryImpl;
 
-    public NewsPresenterImpl(NewsView view, FireBaseRepositoryImpl fireBaseRepositoryImpl) {
+    public NewsPresenterImpl(NewsView view, FireBaseRepository fireBaseRepositoryImpl) {
         this.view = view;
         this.fireBaseRepositoryImpl = fireBaseRepositoryImpl;
     }
