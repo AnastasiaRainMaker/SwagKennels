@@ -1,24 +1,22 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.FireBaseRepository;
-import com.project.swagkennels.News;
-import com.project.swagkennels.fragments.NewsFragment;
-
+import com.project.swagkennels.FireBaseRepositoryImpl;
+import com.project.swagkennels.pojo.News;
 import java.util.ArrayList;
 
 public class NewsPresenterImpl implements NewsPresenter, NewsPresenter.NewsCallbacks {
 
     private NewsView view;
-    private FireBaseRepository fireBaseRepository;
+    private FireBaseRepositoryImpl fireBaseRepositoryImpl;
 
-    public NewsPresenterImpl(NewsView view, FireBaseRepository fireBaseRepository) {
+    public NewsPresenterImpl(NewsView view, FireBaseRepositoryImpl fireBaseRepositoryImpl) {
         this.view = view;
-        this.fireBaseRepository = fireBaseRepository;
+        this.fireBaseRepositoryImpl = fireBaseRepositoryImpl;
     }
 
     @Override
     public void loadData() {
-        fireBaseRepository.getNews(this);
+        fireBaseRepositoryImpl.getNews(this);
     }
 
     @Override

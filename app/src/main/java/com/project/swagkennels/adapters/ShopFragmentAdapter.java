@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.swagkennels.Item;
-import com.project.swagkennels.NewsItemActivity;
+import com.project.swagkennels.pojo.Item;
+import com.project.swagkennels.ItemDetailsActivity;
 import com.project.swagkennels.NewsListActivity;
 import com.project.swagkennels.R;
 
@@ -59,7 +59,7 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, NewsItemActivity.class);
+                    Intent intent = new Intent(context, ItemDetailsActivity.class);
 
                     //  intent.putExtra("imageUrl", "");
                     intent.putExtra("description", item.getDescription());

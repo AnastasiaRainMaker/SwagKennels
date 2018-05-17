@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.swagkennels.Dog;
+import com.project.swagkennels.pojo.Dog;
 import com.project.swagkennels.R;
 
 import java.util.ArrayList;

@@ -1,31 +1,17 @@
 package com.project.swagkennels;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.project.swagkennels.presenters.DogsPresenter;
 import com.project.swagkennels.presenters.NewsPresenter;
 
-import java.util.ArrayList;
+public interface FireBaseRepository {
 
-public class FireBaseRepository {
+    void getNews(final NewsPresenter.NewsCallbacks listener);
 
-    public void getNews(final NewsPresenter.NewsCallbacks listener) {
-        FirebaseDatabase.getInstance().getReference().child("news").getRef().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList data = new ArrayList<News>();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    data.add(dataSnapshot1.getValue(News.class));
-                }
-                listener.onDataLoaded(data);
-            }
+    void getDogs(final DogsPresenter.DogsCallbacks listener);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onDataLoaded(new ArrayList<News>());
-            }
-        });
-    }
+    void getPuppies();
 
+    void getBreedings();
+
+    void getShopItems();
 }

@@ -5,13 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.project.swagkennels.FireBaseRepository;
-import com.project.swagkennels.News;
+import com.project.swagkennels.FireBaseRepositoryImpl;
+import com.project.swagkennels.pojo.News;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.NewsFragmentAdapter;
 import com.project.swagkennels.presenters.NewsPresenter;
@@ -33,9 +34,15 @@ public class NewsFragment extends Fragment implements NewsPresenter.NewsView {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
         setUpViews(view);
         showProgress(true);
-        presenter = new NewsPresenterImpl(this, new FireBaseRepository());
+        presenter = new NewsPresenterImpl(this, new FireBaseRepositoryImpl());
         presenter.loadData();
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("fragment", " onDestroy called for fragment News");
     }
 
     public void showProgress(Boolean value) {

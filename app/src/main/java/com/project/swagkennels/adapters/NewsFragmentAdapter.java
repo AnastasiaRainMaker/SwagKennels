@@ -2,7 +2,6 @@ package com.project.swagkennels.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.project.swagkennels.News;
+import com.project.swagkennels.pojo.News;
 import com.project.swagkennels.NewsItemActivity;
 import com.project.swagkennels.NewsListActivity;
 import com.project.swagkennels.R;
@@ -88,20 +87,18 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<NewsFragmentAdapte
                 }
             });
 
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));
-            requestOptions.error(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.black)));
-            requestOptions.centerCrop();
-
-            Glide.with(holder.imageView.getContext())
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(item.getImageLink())
-                    .into(holder.imageView);
-
             if(item.getImageLink() == null) {
                 holder.imageView.setBackgroundResource(R.drawable.dog_img);
             } else {
-                //use link to load pic into view
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));
+                requestOptions = requestOptions.error(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.black)));
+                requestOptions = requestOptions.centerCrop();
+
+                Glide.with(holder.imageView.getContext())
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(item.getImageLink())
+                        .into(holder.imageView);
             }
             if (item.getDate() == null) {
                 holder.textViewDate.setVisibility(View.GONE);

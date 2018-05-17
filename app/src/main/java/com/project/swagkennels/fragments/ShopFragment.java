@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.project.swagkennels.Item;
+import com.project.swagkennels.pojo.Item;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.ShopFragmentAdapter;
 

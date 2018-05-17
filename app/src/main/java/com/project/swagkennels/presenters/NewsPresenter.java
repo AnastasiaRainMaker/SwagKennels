@@ -1,7 +1,6 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.News;
-
+import com.project.swagkennels.pojo.News;
 import java.util.ArrayList;
 
 public interface NewsPresenter {
@@ -13,7 +12,7 @@ public interface NewsPresenter {
         void displayNoData();
     }
 
-    public interface NewsCallbacks {
+    interface NewsCallbacks {
         void onDataLoaded(ArrayList<News> data);
     }
 }

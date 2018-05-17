@@ -57,7 +57,7 @@ public class ItemDetailsActivity extends AppCompatActivity{
                 priceView.setText(price);
             }
         }
-        sizes.add("Choose size");
+        sizes.add("Size");
         sizes.add("S");
         sizes.add("M");
         ArrayAdapter<String> adapter = new ArrayAdapter<> (this, android.R.layout.simple_spinner_item, sizes);

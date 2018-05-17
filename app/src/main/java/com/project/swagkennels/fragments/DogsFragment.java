@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.project.swagkennels.Dog;
-import com.project.swagkennels.News;
+import com.project.swagkennels.pojo.Dog;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.DogsFragmentAdapter;
-import com.project.swagkennels.adapters.NewsFragmentAdapter;
 
 import java.util.ArrayList;
 

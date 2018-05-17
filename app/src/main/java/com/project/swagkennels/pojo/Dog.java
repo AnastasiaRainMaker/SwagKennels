@@ -1,4 +1,4 @@
-package com.project.swagkennels;
+package com.project.swagkennels.pojo;
 
 public class Dog {
 
