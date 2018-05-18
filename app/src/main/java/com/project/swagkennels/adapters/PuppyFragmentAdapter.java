@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.project.swagkennels.pojo.Dog;
 import com.project.swagkennels.R;
+import com.project.swagkennels.pojo.News;
 
 import java.util.ArrayList;
 

@@ -3,13 +3,11 @@ package com.project.swagkennels;
 import com.project.swagkennels.pojo.News;
 import com.project.swagkennels.presenters.NewsPresenter;
 import com.project.swagkennels.presenters.NewsPresenterImpl;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 

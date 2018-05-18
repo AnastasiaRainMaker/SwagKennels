@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:id="@+id/card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             android:textSize="24sp"/>
 
         <ImageView
+            android:transitionName="@string/transition_shared_element"
             android:background="@color/cardview_light_background"
             android:src="@drawable/milady"
             android:scaleType="fitCenter"

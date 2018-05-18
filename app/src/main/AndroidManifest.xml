@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".NewsItemActivity" />
         <activity android:name=".ItemDetailsActivity" />
+        <activity android:name=".DogItemActivity" />
 
         <service
             android:name=".MyFirebaseMessagingService">
