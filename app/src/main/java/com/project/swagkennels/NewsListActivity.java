@@ -21,37 +21,50 @@ import com.project.swagkennels.fragments.NewsFragment;
 import com.project.swagkennels.fragments.PuppiesFragment;
 import com.project.swagkennels.fragments.ShopFragment;
 
-import java.util.Objects;
-
 public class NewsListActivity extends AppCompatActivity {
 
-    BottomNavigationViewEx bottomNavigationView;
-    FragmentManager fragmentManager;
-    Fragment fragment;
-    Toolbar toolbar;
+    private FragmentManager fragmentManager;
+    private Fragment fragment;
+    private  String screenType = "";
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        setUpViews();
+    }
+
+    private void setUpViews() {
+        if (getIntent() != null){
+            screenType = getIntent().getStringExtra("type") != null ? getIntent().getStringExtra("type") : "";
+        }
         fragmentManager = getSupportFragmentManager();
-        fragment = new NewsFragment();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_news, fragment, "newsFragment")
+                .replace(R.id.frame_news, getCurrentScreen(), "newsFragment")
                 .commit();
         setUpBottomNav();
-        toolbar = findViewById(R.id.toolbar_news);
+        Toolbar toolbar = findViewById(R.id.toolbar_news);
         setSupportActionBar(toolbar);
     }
 
-   public void setUpBottomNav() {
-       bottomNavigationView = findViewById(R.id.bottom_navigation);
-       bottomNavigationView.enableAnimation(true);
-       bottomNavigationView.enableShiftingMode(false);
-       bottomNavigationView.enableItemShiftingMode(false);
+    private Fragment getCurrentScreen() {
+        switch (screenType){
+            case "dogs" : return new DogsFragment();
+            case "puppies" : return new PuppiesFragment();
+            case "breeding" : return new BreedingFragment();
+            case "shop" : return new ShopFragment();
+            default : return new NewsFragment();
+        }
+    }
 
-       bottomNavigationView.setOnNavigationItemSelectedListener(
+    public void setUpBottomNav() {
+        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.enableAnimation(true);
+        bottomNavigationView.enableShiftingMode(false);
+        bottomNavigationView.enableItemShiftingMode(false);
+        bottomNavigationView.setCurrentItem(getCurrentNavId());
+        bottomNavigationView.setOnNavigationItemSelectedListener(
                new BottomNavigationView.OnNavigationItemSelectedListener() {
                    @Override
                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -106,6 +119,16 @@ public class NewsListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_news_menu, menu);
         return true;
+    }
+
+    public int getCurrentNavId() {
+        switch (screenType){
+            case "dogs" : return 1;
+            case "puppies" : return 2;
+            case "breeding" : return 3;
+            case "shop" : return 4;
+            default : return 0;
+        }
     }
 
     @Override

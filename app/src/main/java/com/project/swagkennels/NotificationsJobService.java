@@ -17,16 +17,13 @@ import com.firebase.jobdispatcher.JobService;
 
 public class NotificationsJobService extends JobService {
 
-    private static final String TAG = "MyJobService";
-
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
-        Log.d(TAG, "Performing long running task in scheduled job");
-        // TODO(developer): add long running task here.
         wakeDeviceIfTheScreenOff();
         sendNotification(
                 jobParameters.getExtras() != null ? jobParameters.getExtras().getString("message") : "",
-                jobParameters.getExtras() != null ? jobParameters.getExtras().getString("title") : ""
+                jobParameters.getExtras() != null ? jobParameters.getExtras().getString("title") : "",
+                jobParameters.getExtras() != null ? jobParameters.getExtras().getString("type") : ""
         );
 
         return false;
@@ -37,8 +34,9 @@ public class NotificationsJobService extends JobService {
         return false;
     }
 
-    private void sendNotification(String messageBody, String title) {
+    private void sendNotification(String messageBody, String title, String type) {
         Intent intent = new Intent(this, NewsListActivity.class);
+        intent.putExtra("type", type);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -60,7 +58,7 @@ public class NotificationsJobService extends JobService {
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
+                    "Channel swagkennels",
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
