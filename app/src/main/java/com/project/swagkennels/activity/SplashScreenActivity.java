@@ -1,4 +1,4 @@
-package com.project.swagkennels;
+package com.project.swagkennels.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public class SplashScreen extends AppCompatActivity{
+import com.project.swagkennels.R;
+
+public class SplashScreenActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,7 +17,7 @@ public class SplashScreen extends AppCompatActivity{
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                Intent mainIntent = new Intent(SplashScreen.this, NewsListActivity.class);
+                Intent mainIntent = new Intent(SplashScreenActivity.this, NewsListActivity.class);
                 startActivity(mainIntent);
                 finish();
             }

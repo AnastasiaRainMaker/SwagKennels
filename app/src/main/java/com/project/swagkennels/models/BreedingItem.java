@@ -1,4 +1,4 @@
-package com.project.swagkennels.pojo;
+package com.project.swagkennels.models;
 
 import java.io.Serializable;
 

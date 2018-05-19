@@ -1,8 +1,7 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.FireBaseRepository;
-import com.project.swagkennels.FireBaseRepositoryImpl;
-import com.project.swagkennels.pojo.News;
+import com.project.swagkennels.repository.FireBaseRepository;
+import com.project.swagkennels.models.News;
 import java.util.ArrayList;
 
 public class NewsPresenterImpl implements NewsPresenter, NewsPresenter.NewsCallbacks {

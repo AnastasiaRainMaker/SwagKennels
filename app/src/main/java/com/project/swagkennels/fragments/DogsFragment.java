@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.project.swagkennels.FireBaseRepositoryImpl;
-import com.project.swagkennels.pojo.Dog;
+import com.project.swagkennels.repository.FireBaseRepositoryImpl;
+import com.project.swagkennels.models.Dog;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.DogsFragmentAdapter;
 import com.project.swagkennels.presenters.DogsPresenter;
 import com.project.swagkennels.presenters.DogsPresenterImpl;
-import com.project.swagkennels.presenters.NewsPresenter;
-import com.project.swagkennels.presenters.NewsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.Objects;

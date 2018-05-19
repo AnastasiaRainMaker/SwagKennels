@@ -1,31 +1,32 @@
 package com.project.swagkennels;
 
-import com.project.swagkennels.models.Dog;
-import com.project.swagkennels.presenters.DogsPresenter;
-import com.project.swagkennels.presenters.DogsPresenterImpl;
-import com.project.swagkennels.repository.FireBaseRepositoryImpl;
+import com.project.swagkennels.models.Item;
+import com.project.swagkennels.presenters.ShopPresenter;
+import com.project.swagkennels.presenters.ShopPresenterImpl;
+import com.project.swagkennels.repository.FireBaseRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DogsPresenterTest {
+public class ShopPresenterTest {
 
-    private FireBaseRepositoryImpl repository;
-    private DogsPresenter.DogsView view;
-    private DogsPresenterImpl presenter;
-    private ArrayList<Dog> data = new ArrayList<>(Arrays.asList(new Dog(), new Dog(), new Dog()));
-    private ArrayList<Dog> noData = new ArrayList<>();
+    private ShopPresenterImpl presenter;
+    private ShopPresenter.ShopView view;
+    private FireBaseRepository repository;
+    private ArrayList<Item> data = new ArrayList<>(Arrays.asList(new Item(), new Item(), new Item()));
+    private ArrayList<Item> emptyData = new ArrayList<>();
 
     @Before
     public void setUp(){
-        repository = Mockito.mock(FireBaseRepositoryImpl.class);
-        view = Mockito.mock(DogsPresenter.DogsView.class);
-        presenter = new DogsPresenterImpl(view, repository);
+        view = Mockito.mock(ShopPresenter.ShopView.class);
+        repository = Mockito.mock(FireBaseRepository.class);
+        presenter = new ShopPresenterImpl(view, repository);
     }
 
     @Test
@@ -37,12 +38,12 @@ public class DogsPresenterTest {
                 presenter.onDataLoaded(data);
                 return null;
             }
-        }).when(repository).getDogs(presenter);
+        }).when(repository).getShopItems(presenter);
 
         // do
         presenter.loadData();
 
-        // after
+        // then
         Mockito.verify(view).displayData(data);
     }
 
@@ -52,15 +53,16 @@ public class DogsPresenterTest {
         Mockito.doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                presenter.onDataLoaded(noData);
+                presenter.onDataLoaded(emptyData);
                 return null;
             }
-        }).when(repository).getDogs(presenter);
+        }).when(repository).getShopItems(presenter);
 
         // do
         presenter.loadData();
 
-        // after
+        // then
         Mockito.verify(view).displayNoData();
     }
+
 }

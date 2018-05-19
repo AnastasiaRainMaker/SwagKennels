@@ -1,4 +1,4 @@
-package com.project.swagkennels;
+package com.project.swagkennels.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.project.swagkennels.R;
 
 public class TransparentImageActivity extends AppCompatActivity {
 

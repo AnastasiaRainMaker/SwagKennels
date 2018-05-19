@@ -1,16 +1,18 @@
-package com.project.swagkennels;
+package com.project.swagkennels.repository;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.project.swagkennels.pojo.Breeding;
-import com.project.swagkennels.pojo.Dog;
-import com.project.swagkennels.pojo.News;
-import com.project.swagkennels.pojo.Puppy;
+import com.project.swagkennels.models.Breeding;
+import com.project.swagkennels.models.Dog;
+import com.project.swagkennels.models.Item;
+import com.project.swagkennels.models.News;
+import com.project.swagkennels.models.Puppy;
 import com.project.swagkennels.presenters.BreedingPresenter;
 import com.project.swagkennels.presenters.DogsPresenter;
 import com.project.swagkennels.presenters.NewsPresenter;
+import com.project.swagkennels.presenters.ShopPresenter;
 import com.project.swagkennels.presenters.PuppyPresenter;
 
 import java.util.ArrayList;
@@ -94,7 +96,25 @@ public class FireBaseRepositoryImpl implements FireBaseRepository {
     }
 
     @Override
-    public void getShopItems() {
+    public void getShopItems(final ShopPresenter.ShopCallbacks listener) {
+        FirebaseDatabase.getInstance().getReference().child("shop").getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Item> data = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Item item = dataSnapshot1.getValue(Item.class);
+                    if (item != null) {
+                        item.setKey(dataSnapshot1.getKey() != null ? dataSnapshot1.getKey() : "");
+                    }
+                    data.add(item);
+                }
+                listener.onDataLoaded(data);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onDataLoaded(new ArrayList<Item>());
+            }
+        });
     }
 }

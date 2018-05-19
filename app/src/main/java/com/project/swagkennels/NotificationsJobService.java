@@ -10,10 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
+import com.project.swagkennels.activity.NewsListActivity;
 
 public class NotificationsJobService extends JobService {
 

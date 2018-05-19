@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -13,16 +14,54 @@
         android:theme="@style/ToolbarSandwich"
         android:background="@color/colorPrimary">
 
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/logo_toolbar"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_marginEnd="130dp"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logo_text"/>
+            <ImageView
+                android:layout_width="45dp"
+                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_toolbar"/>
+
+            <ImageView
+                android:layout_width="180dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="6dp"
+                android:paddingStart="1dp"
+                android:paddingEnd="15dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_text"/>
+
+            <TextView
+                android:id="@+id/shop_bin_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_white"
+                android:drawableStart="@drawable/ic_shop"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="0"
+                android:clickable="true"
+                android:focusable="true"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+            <!--<ImageView-->
+                <!--android:layout_width="45dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:paddingTop="10dp"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:paddingStart="1dp"-->
+                <!--android:paddingEnd="5dp"-->
+                <!--android:src="@drawable/ic_shop_toolbar"/>-->
+
+
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

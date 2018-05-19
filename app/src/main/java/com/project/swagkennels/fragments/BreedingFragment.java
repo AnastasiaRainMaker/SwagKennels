@@ -11,13 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.project.swagkennels.FireBaseRepository;
-import com.project.swagkennels.FireBaseRepositoryImpl;
+import com.project.swagkennels.repository.FireBaseRepositoryImpl;
 import com.project.swagkennels.adapters.BreedingFragmentAdapter;
-import com.project.swagkennels.pojo.Breeding;
-import com.project.swagkennels.pojo.Dog;
+import com.project.swagkennels.models.Breeding;
 import com.project.swagkennels.R;
-import com.project.swagkennels.adapters.PuppyFragmentAdapter;
 import com.project.swagkennels.presenters.BreedingPresenter;
 import com.project.swagkennels.presenters.BreedingPresenterImpl;
 

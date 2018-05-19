@@ -2,6 +2,7 @@ package com.project.swagkennels.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.swagkennels.pojo.Item;
-import com.project.swagkennels.ItemDetailsActivity;
-import com.project.swagkennels.NewsListActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.project.swagkennels.models.Item;
+import com.project.swagkennels.activity.ItemDetailsActivity;
+import com.project.swagkennels.activity.NewsListActivity;
 import com.project.swagkennels.R;
 
 import java.util.ArrayList;
@@ -28,6 +31,10 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
     public ShopFragmentAdapter(ArrayList<Item> items, Context context) {
         this.items = items;
         this.context = context;
+    }
+
+    public void setData(ArrayList<Item> data) {
+        this.items = data;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,9 +68,17 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ItemDetailsActivity.class);
 
+                    intent.putExtra("item", item);
+
                     //  intent.putExtra("imageUrl", "");
-                    intent.putExtra("description", item.getDescription());
-                    intent.putExtra("price", item.getPrice());
+//                    intent.putExtra("description", item.getDescription());
+//                    intent.putExtra("price", item.getPrice());
+//                    intent.putExtra("type", item.getType());
+//                    intent.putExtra("title", item.getTitle());
+//                    intent.putExtra("size", item.getSize());
+//                    intent.putExtra("available", item.getAvailable());
+//                    intent.putExtra("image", item.getImageUrl());
+//                    intent.putExtra("key", item.getKey());
 
                     String transitionName = context.getString(R.string.transition_shared_element);
 
@@ -75,12 +90,21 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
                     ActivityCompat.startActivity(context, intent, options.toBundle());
                 }
             });
-            if (item.getImageUrl() != null) {
-                //load image here;
+
+            if(item.getImageUrl() == null) {
+                holder.imageView.setBackgroundResource(R.drawable.dog_img);
             } else {
-                //handle no url
-                holder.imageView.setBackgroundResource(R.drawable.no_item_image);
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));
+                requestOptions = requestOptions.error(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.colorPrimary)));
+                requestOptions = requestOptions.centerCrop();
+
+                Glide.with(holder.imageView.getContext())
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(item.getImageUrl())
+                        .into(holder.imageView);
             }
+
             if (item.getDescription() != null) {
                 holder.textViewDescription.setText(item.getDescription());
             } else {

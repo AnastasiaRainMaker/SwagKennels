@@ -1,6 +1,6 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.pojo.Breeding;
+import com.project.swagkennels.models.Breeding;
 
 import java.util.ArrayList;
 

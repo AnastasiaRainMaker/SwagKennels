@@ -1,9 +1,10 @@
-package com.project.swagkennels;
+package com.project.swagkennels.repository;
 
 import com.project.swagkennels.presenters.BreedingPresenter;
 import com.project.swagkennels.presenters.DogsPresenter;
 import com.project.swagkennels.presenters.NewsPresenter;
 import com.project.swagkennels.presenters.PuppyPresenter;
+import com.project.swagkennels.presenters.ShopPresenter;
 
 public interface FireBaseRepository {
 
@@ -15,5 +16,5 @@ public interface FireBaseRepository {
 
     void getBreedings(final BreedingPresenter.BreedingCallback listener);
 
-    void getShopItems();
+    void getShopItems(ShopPresenter.ShopCallbacks listener);
 }

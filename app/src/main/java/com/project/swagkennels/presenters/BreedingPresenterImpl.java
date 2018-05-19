@@ -1,7 +1,7 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.FireBaseRepository;
-import com.project.swagkennels.pojo.Breeding;
+import com.project.swagkennels.repository.FireBaseRepository;
+import com.project.swagkennels.models.Breeding;
 import java.util.ArrayList;
 
 public class BreedingPresenterImpl implements BreedingPresenter, BreedingPresenter.BreedingCallback {

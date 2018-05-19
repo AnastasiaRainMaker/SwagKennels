@@ -1,9 +1,12 @@
-package com.project.swagkennels;
+package com.project.swagkennels.activity;
 
 import android.annotation.SuppressLint;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,13 +16,21 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.project.swagkennels.R;
 import com.project.swagkennels.fragments.BreedingFragment;
 import com.project.swagkennels.fragments.DogsFragment;
 import com.project.swagkennels.fragments.NewsFragment;
 import com.project.swagkennels.fragments.PuppiesFragment;
+import com.project.swagkennels.fragments.ShopBinFragment;
 import com.project.swagkennels.fragments.ShopFragment;
+import com.project.swagkennels.repository.RoomRepository;
+import com.project.swagkennels.room.PurchasedShopItem;
+
+import java.util.List;
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -35,6 +46,26 @@ public class NewsListActivity extends AppCompatActivity {
         setUpViews();
     }
 
+    private void setUpBinIcon(final TextView shopBinButton) {
+        RoomRepository roomRepository = new RoomRepository(getApplication());
+        LiveData<List<PurchasedShopItem>> livePurchasedShopItems = roomRepository.getAllPurchasedItems();
+        livePurchasedShopItems.observeForever(new Observer<List<PurchasedShopItem>>() {
+            @Override
+            public void onChanged(@Nullable List<PurchasedShopItem> purchasedShopItems) {
+                shopBinButton.setText(String.valueOf(purchasedShopItems != null ? purchasedShopItems.size() : 0));
+            }
+        });
+
+        shopBinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_news, new ShopBinFragment(), "shopBinFragment")
+                        .commit();
+            }
+        });
+    }
+
     private void setUpViews() {
         if (getIntent() != null){
             screenType = getIntent().getStringExtra("type") != null ? getIntent().getStringExtra("type") : "";
@@ -46,6 +77,10 @@ public class NewsListActivity extends AppCompatActivity {
         setUpBottomNav();
         Toolbar toolbar = findViewById(R.id.toolbar_news);
         setSupportActionBar(toolbar);
+
+        TextView shopBinButton = toolbar.findViewById(R.id.shop_bin_button);
+        setUpBinIcon(shopBinButton);
+
     }
 
     private Fragment getCurrentScreen() {

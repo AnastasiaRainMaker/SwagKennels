@@ -1,14 +1,12 @@
 package com.project.swagkennels;
 
-import com.project.swagkennels.pojo.Puppy;
-import com.project.swagkennels.presenters.NewsPresenter;
-import com.project.swagkennels.presenters.NewsPresenterImpl;
+import com.project.swagkennels.models.Puppy;
 import com.project.swagkennels.presenters.PuppyPresenter;
 import com.project.swagkennels.presenters.PuppyPresenterImpl;
+import com.project.swagkennels.repository.FireBaseRepository;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;

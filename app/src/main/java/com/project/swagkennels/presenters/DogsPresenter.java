@@ -1,6 +1,6 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.pojo.Dog;
+import com.project.swagkennels.models.Dog;
 import java.util.ArrayList;
 
 public interface DogsPresenter {

@@ -1,6 +1,6 @@
 package com.project.swagkennels.presenters;
 ;
-import com.project.swagkennels.pojo.Puppy;
+import com.project.swagkennels.models.Puppy;
 
 import java.util.ArrayList;
 

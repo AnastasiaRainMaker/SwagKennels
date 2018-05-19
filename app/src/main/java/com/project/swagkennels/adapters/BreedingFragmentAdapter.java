@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,10 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.project.swagkennels.BreedingItemActivity;
-import com.project.swagkennels.NewsListActivity;
+import com.project.swagkennels.activity.BreedingItemActivity;
 import com.project.swagkennels.R;
-import com.project.swagkennels.pojo.Breeding;
+import com.project.swagkennels.models.Breeding;
 import java.util.ArrayList;
 
 public class BreedingFragmentAdapter extends RecyclerView.Adapter<BreedingFragmentAdapter.ViewHolder> {

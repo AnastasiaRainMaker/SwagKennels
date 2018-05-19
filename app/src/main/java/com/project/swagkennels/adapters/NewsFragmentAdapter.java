@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.project.swagkennels.pojo.News;
-import com.project.swagkennels.NewsItemActivity;
-import com.project.swagkennels.NewsListActivity;
+import com.project.swagkennels.models.News;
+import com.project.swagkennels.activity.NewsItemActivity;
+import com.project.swagkennels.activity.NewsListActivity;
 import com.project.swagkennels.R;
 
 import java.util.ArrayList;

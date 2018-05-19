@@ -1,4 +1,4 @@
-package com.project.swagkennels;
+package com.project.swagkennels.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -16,8 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.project.swagkennels.pojo.Breeding;
-import com.project.swagkennels.pojo.BreedingItem;
+import com.project.swagkennels.R;
+import com.project.swagkennels.models.Breeding;
+import com.project.swagkennels.models.BreedingItem;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
 package com.project.swagkennels.presenters;
 
-import com.project.swagkennels.pojo.News;
+import com.project.swagkennels.models.News;
 import java.util.ArrayList;
 
 public interface NewsPresenter {

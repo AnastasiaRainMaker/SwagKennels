@@ -1,19 +1,21 @@
-package com.project.swagkennels.pojo;
+package com.project.swagkennels.models;
 
-public class Item {
+public class Puppy {
 
-    private String price;
+    private String name;
 
     private String description;
 
     private String imageUrl;
 
-    public String getPrice() {
-        return price;
+    public Puppy() {}
+
+    public String getName() {
+        return name;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

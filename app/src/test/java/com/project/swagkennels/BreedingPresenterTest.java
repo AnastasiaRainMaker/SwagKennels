@@ -1,8 +1,9 @@
 package com.project.swagkennels;
 
-import com.project.swagkennels.pojo.Breeding;
+import com.project.swagkennels.models.Breeding;
 import com.project.swagkennels.presenters.BreedingPresenter;
 import com.project.swagkennels.presenters.BreedingPresenterImpl;
+import com.project.swagkennels.repository.FireBaseRepositoryImpl;
 
 import org.junit.Before;
 import org.junit.Test;

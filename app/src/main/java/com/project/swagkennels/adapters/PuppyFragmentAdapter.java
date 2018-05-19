@@ -13,10 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.project.swagkennels.pojo.Dog;
 import com.project.swagkennels.R;
-import com.project.swagkennels.pojo.News;
-import com.project.swagkennels.pojo.Puppy;
+import com.project.swagkennels.models.Puppy;
 
 import java.util.ArrayList;
 
