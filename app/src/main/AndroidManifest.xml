@@ -20,6 +20,8 @@
         <activity android:name=".NewsItemActivity" />
         <activity android:name=".ItemDetailsActivity" />
         <activity android:name=".DogItemActivity" />
+        <activity android:name=".BreedingItemActivity" />
+        <activity android:name=".TransparentImageActivity" android:theme="@style/Theme.Transparent"/>
 
         <service
             android:name=".MyFirebaseMessagingService"

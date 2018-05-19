@@ -10,36 +10,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.project.swagkennels.pojo.Dog;
+import com.project.swagkennels.FireBaseRepository;
+import com.project.swagkennels.FireBaseRepositoryImpl;
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.PuppyFragmentAdapter;
+import com.project.swagkennels.pojo.Puppy;
+import com.project.swagkennels.presenters.PuppyPresenter;
+import com.project.swagkennels.presenters.PuppyPresenterImpl;
 
 import java.util.ArrayList;
 
-public class PuppiesFragment extends Fragment {
+public class PuppiesFragment extends Fragment implements PuppyPresenter.PuppyView {
 
-    ArrayList<Dog> puppyList;
+    ArrayList<Puppy> puppyList;
     RecyclerView recyclerView;
     PuppyFragmentAdapter adapter;
     ProgressBar progressBar;
+    PuppyPresenter presenter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_puppies, container, false);
         puppyList = new ArrayList<>();
+        showProgress(true);
+        setUpViews(view);
+        presenter = new PuppyPresenterImpl(new FireBaseRepositoryImpl(), this);
+        presenter.loadData();
+        return view;
+    }
+
+    public void setUpViews(View view) {
+        progressBar = view.findViewById(R.id.progressBarLoading);
         recyclerView = view.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-        puppyList.add(new Dog(null, "Phantom","Available now"));
-        puppyList.add(new Dog(null, "Tyson","Available now"));
-
         adapter = new PuppyFragmentAdapter(puppyList, getContext());
         recyclerView.setAdapter(adapter);
-        return view;
     }
 
     public void showProgress(Boolean value) {
@@ -50,5 +58,17 @@ public class PuppiesFragment extends Fragment {
         if (!value && progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void displayData(ArrayList<Puppy> data) {
+        showProgress(false);
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void displayNoData() {
+        //todo handle no data
     }
 }
