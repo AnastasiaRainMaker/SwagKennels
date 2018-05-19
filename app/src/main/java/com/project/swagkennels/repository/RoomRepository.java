@@ -10,6 +10,8 @@ import com.project.swagkennels.room.PurchasedShopItemDao;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 public class RoomRepository {
 
     private PurchasedShopItemDao mPurchasedShopItemDao;
@@ -21,7 +23,7 @@ public class RoomRepository {
 //        mAllPurchasedItems = mPurchasedShopItemDao.getAllPurchasedItems();
     }
 
-    public LiveData<List<PurchasedShopItem>> getAllPurchasedItems() {
+    public Flowable<List<PurchasedShopItem>> getAllPurchasedItems() {
         return mPurchasedShopItemDao.getAllPurchasedItemsLiveData();
     }
 

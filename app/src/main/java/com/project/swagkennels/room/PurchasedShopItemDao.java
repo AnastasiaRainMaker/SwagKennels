@@ -8,13 +8,15 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 import static com.project.swagkennels.Constants.PURCHASED_ITEMS_TABLE_NAME;
 
 @Dao
 public interface PurchasedShopItemDao {
 
     @Query("SELECT * FROM purchased_items")
-    LiveData<List<PurchasedShopItem>> getAllPurchasedItemsLiveData();
+    Flowable<List<PurchasedShopItem>> getAllPurchasedItemsLiveData();
 
     @Query("SELECT * FROM purchased_items")
     List<PurchasedShopItem> getAllPurchasedItems();

@@ -2,11 +2,8 @@ package com.project.swagkennels.activity;
 
 import android.annotation.SuppressLint;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -32,11 +30,17 @@ import com.project.swagkennels.room.PurchasedShopItem;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+
 public class NewsListActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     private Fragment fragment;
     private  String screenType = "";
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -46,24 +50,36 @@ public class NewsListActivity extends AppCompatActivity {
         setUpViews();
     }
 
-    private void setUpBinIcon(final TextView shopBinButton) {
-        RoomRepository roomRepository = new RoomRepository(getApplication());
-        LiveData<List<PurchasedShopItem>> livePurchasedShopItems = roomRepository.getAllPurchasedItems();
-        livePurchasedShopItems.observeForever(new Observer<List<PurchasedShopItem>>() {
+    private void setUpBinIcon(final TextView shopBinButton, ImageView shopBinImage) {
+        final RoomRepository roomRepository = new RoomRepository(getApplication());
+        Flowable<List<PurchasedShopItem>> purchasedShopItems = roomRepository.getAllPurchasedItems();
+        disposables.add(purchasedShopItems.observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<PurchasedShopItem>>() {
             @Override
-            public void onChanged(@Nullable List<PurchasedShopItem> purchasedShopItems) {
+            public void accept(List<PurchasedShopItem> purchasedShopItems) {
                 shopBinButton.setText(String.valueOf(purchasedShopItems != null ? purchasedShopItems.size() : 0));
             }
-        });
+        }));
+
 
         shopBinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_news, new ShopBinFragment(), "shopBinFragment")
-                        .commit();
+                openShopBinFragment();
             }
         });
+
+        shopBinImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openShopBinFragment();
+            }
+        });
+    }
+
+    private void openShopBinFragment() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_news, new ShopBinFragment(), "shopBinFragment")
+                .commit();
     }
 
     private void setUpViews() {
@@ -79,7 +95,8 @@ public class NewsListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView shopBinButton = toolbar.findViewById(R.id.shop_bin_button);
-        setUpBinIcon(shopBinButton);
+        ImageView shopBinImage = toolbar.findViewById(R.id.shop_bin_image);
+        setUpBinIcon(shopBinButton, shopBinImage);
 
     }
 
@@ -185,4 +202,11 @@ public class NewsListActivity extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
+    }
+
 }

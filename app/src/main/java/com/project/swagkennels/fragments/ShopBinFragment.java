@@ -1,37 +1,53 @@
 package com.project.swagkennels.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.project.swagkennels.R;
 import com.project.swagkennels.adapters.NewsFragmentAdapter;
+import com.project.swagkennels.adapters.ShopBinFragmentAdapter;
 import com.project.swagkennels.models.News;
 import com.project.swagkennels.presenters.NewsPresenter;
+import com.project.swagkennels.presenters.ShopBinPresenter;
+import com.project.swagkennels.presenters.ShopBinPresenterImpl;
+import com.project.swagkennels.repository.RoomRepository;
+import com.project.swagkennels.room.PurchasedShopItem;
+
 import java.util.ArrayList;
 
-public class ShopBinFragment extends Fragment implements NewsPresenter.NewsView {
+public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBinView {
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
-    NewsFragmentAdapter adapter;
-    ArrayList<News> newsList = new ArrayList<>();
-    NewsPresenter presenter = null;
+    ShopBinFragmentAdapter adapter;
+    ShopBinPresenter presenter;
+    private AppCompatActivity mActivity;
+    private TextView emptyCart;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (AppCompatActivity) context;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_shop_bin_list, container, false);
         setUpViews(view);
+        presenter = new ShopBinPresenterImpl(this, new RoomRepository(mActivity.getApplication()));
         showProgress(true);
-//        presenter = new NewsPresenterImpl(this, new FireBaseRepositoryImpl());
-//        presenter.loadData();
+        presenter.loadData();
         return view;
     }
 
@@ -45,26 +61,28 @@ public class ShopBinFragment extends Fragment implements NewsPresenter.NewsView 
     }
 
     public void setUpViews(View view) {
+        emptyCart = view.findViewById(R.id.textViewEmptyBin);
         recyclerView = view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.progressBarLoading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new NewsFragmentAdapter(newsList, getContext());
+        adapter = new ShopBinFragmentAdapter(new ArrayList<PurchasedShopItem>(), getContext());
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void displayData(ArrayList<News> data) {
-//        showProgress(false);
-//        adapter.setData(data);
-//        adapter.notifyDataSetChanged();
+    public void displayData(ArrayList<PurchasedShopItem> data) {
+        showProgress(false);
+        emptyCart.setVisibility(View.INVISIBLE);
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void displayNoData() {
-//        showProgress(false);
-//        recyclerView.setVisibility(View.INVISIBLE);
-//        // todo show textView "no news"
+        showProgress(false);
+        recyclerView.setVisibility(View.INVISIBLE);
+        emptyCart.setVisibility(View.VISIBLE);
     }
 }

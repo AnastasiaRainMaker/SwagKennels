@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,12 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NewsItemActivity" />
-        <activity android:name=".activity.ItemDetailsActivity" />
-        <activity android:name=".activity.DogItemActivity" />
-        <activity android:name=".activity.BreedingItemActivity" />
-        <activity android:name=".activity.TransparentImageActivity" android:theme="@style/Theme.Transparent"/>
-        <activity android:name=".activity.NewsListActivity" />
+        <activity android:name=".activity.NewsItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ItemDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.DogItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BreedingItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TransparentImageActivity"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NewsListActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".MyFirebaseMessagingService"
