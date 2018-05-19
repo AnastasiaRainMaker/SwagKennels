@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewsListActivity"
+        <activity android:name=".SplashScreen"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,7 @@
         <activity android:name=".DogItemActivity" />
         <activity android:name=".BreedingItemActivity" />
         <activity android:name=".TransparentImageActivity" android:theme="@style/Theme.Transparent"/>
+        <activity android:name=".NewsListActivity" />
 
         <service
             android:name=".MyFirebaseMessagingService"
