@@ -17,14 +17,6 @@ public class Breeding implements Serializable {
 
     public Breeding() {}
 
-    public Breeding (String title, String imageUrlMale, String imageUrlFemale, HashMap<String, BreedingItem> males, HashMap<String, BreedingItem> females) {
-        this.title = title;
-        this.imageUrlMale = imageUrlMale;
-        this.imageUrlFemale = imageUrlFemale;
-        this.males = males;
-        this.females = females;
-    }
-
     public String getTitle() {
         return title;
     }

@@ -8,15 +8,7 @@ public class Puppy {
 
     private String imageUrl;
 
-    public Puppy(String name, String description, String imageUrl) {
-
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-    }
-
     public Puppy() {}
-
 
     public String getName() {
         return name;

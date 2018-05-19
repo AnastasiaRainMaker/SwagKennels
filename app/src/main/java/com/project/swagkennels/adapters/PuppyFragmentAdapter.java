@@ -58,28 +58,6 @@ public class PuppyFragmentAdapter extends RecyclerView.Adapter<PuppyFragmentAdap
     public void onBindViewHolder(@NonNull final PuppyFragmentAdapter.ViewHolder holder, final int position) {
         final Puppy item = dataList.get(position);
         if(item != null) {
-
-//            holder.card.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(context, NewsItemActivity.class);
-//
-//                  //  intent.putExtra("imageUrl", "");
-//                    intent.putExtra("description", item.getDescription());
-//                    intent.putExtra("title", item.getTitle());
-//                    intent.putExtra("imgUrl", item.getImageUrl());
-//
-//                    String transitionName = context.getString(R.string.transition_shared_element);
-//
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation((NewsListActivity) context,
-//                                    holder.imageView,   // Starting view
-//                                    transitionName    // The String
-//                            );
-//                    ActivityCompat.startActivity(context, intent, options.toBundle());
-//                }
-//            });
-
             if(item.getImageUrl() == null) {
                 holder.imageView.setBackgroundResource(R.drawable.dog_img);
             } else {

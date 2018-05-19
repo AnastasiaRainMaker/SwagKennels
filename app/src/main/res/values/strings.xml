@@ -3,4 +3,5 @@
     <string name="transition_shared_element">shareElement</string>
     <string name="no_price_str">Price is currently unavailable</string>
     <string name="default_notification_channel_id">default_channel</string>
+    <string name="empty_page_str">Sorry, the page is not available! Check your Internet connection and try again later!</string>
 </resources>

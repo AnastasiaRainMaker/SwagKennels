@@ -16,7 +16,6 @@ public class ItemDetailsActivity extends AppCompatActivity{
     Toolbar toolbar;
     ImageView imageView;
     TextView descriptionView;
-    TextView dateView;
     TextView priceView;
     Spinner spinner;
     ArrayList<String> sizes;

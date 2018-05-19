@@ -1,5 +1,6 @@
 package com.project.swagkennels.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.project.swagkennels.presenters.BreedingPresenter;
 import com.project.swagkennels.presenters.BreedingPresenterImpl;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BreedingFragment extends Fragment implements BreedingPresenter.BreedingView {
 
@@ -29,12 +31,13 @@ public class BreedingFragment extends Fragment implements BreedingPresenter.Bree
     BreedingFragmentAdapter adapter;
     ProgressBar progressBar;
     BreedingPresenter presenter;
+    View view;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_breeding, container, false);
+        view = inflater.inflate(R.layout.fragment_breeding, container, false);
         puppyList = new ArrayList<>();
         setUpViews(view);
         showProgress(true);
@@ -72,6 +75,18 @@ public class BreedingFragment extends Fragment implements BreedingPresenter.Bree
 
     @Override
     public void displayNoData() {
-        //todo handle no data
+        setViewLayout(R.layout.empty_page);
+    }
+
+    private void setViewLayout(int id){
+        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater != null) {
+            view = inflater.inflate(id, null);
+            ViewGroup rootView = (ViewGroup) getView();
+            if (rootView != null) {
+                rootView.removeAllViews();
+                rootView.addView(view);
+            }
+        }
     }
 }

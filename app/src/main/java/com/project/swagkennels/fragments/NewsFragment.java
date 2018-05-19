@@ -1,5 +1,6 @@
 package com.project.swagkennels.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.project.swagkennels.presenters.NewsPresenter;
 import com.project.swagkennels.presenters.NewsPresenterImpl;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NewsFragment extends Fragment implements NewsPresenter.NewsView {
 
@@ -27,11 +29,12 @@ public class NewsFragment extends Fragment implements NewsPresenter.NewsView {
     NewsFragmentAdapter adapter;
     ArrayList<News> newsList = new ArrayList<>();
     NewsPresenter presenter = null;
+    View view;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        view = inflater.inflate(R.layout.fragment_news_list, container, false);
         setUpViews(view);
         showProgress(true);
         presenter = new NewsPresenterImpl(this, new FireBaseRepositoryImpl());
@@ -75,6 +78,18 @@ public class NewsFragment extends Fragment implements NewsPresenter.NewsView {
     public void displayNoData() {
         showProgress(false);
         recyclerView.setVisibility(View.INVISIBLE);
-        // todo show textView "no news"
+        setViewLayout(R.layout.empty_page);
+    }
+
+    private void setViewLayout(int id){
+        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater != null) {
+            view = inflater.inflate(id, null);
+            ViewGroup rootView = (ViewGroup) getView();
+            if (rootView != null) {
+                rootView.removeAllViews();
+                rootView.addView(view);
+            }
+        }
     }
 }

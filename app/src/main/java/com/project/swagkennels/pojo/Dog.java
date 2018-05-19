@@ -8,12 +8,6 @@ public class Dog {
 
     private String description;
 
-    public Dog(String imageUrl, String title, String description) {
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.description = description;
-    }
-
     public Dog() {};
 
     public String getImageUrl() {

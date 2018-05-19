@@ -63,18 +63,8 @@ public class BreedingFragmentAdapter extends RecyclerView.Adapter<BreedingFragme
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, BreedingItemActivity.class);
-
                     intent.putExtra("breedingItem", dataList.get(position));
-
-                    String transitionName = context.getString(R.string.transition_shared_element);
-
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation((NewsListActivity) context,
-//                                    holder.imageView,   // Starting view
-//                                    transitionName    // The String
-//                            );
-//                    ActivityCompat.startActivity(context, intent, options.toBundle());
-                   context.startActivity(intent);
+                    context.startActivity(intent);
                 }
             });
 

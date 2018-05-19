@@ -28,22 +28,6 @@ public class ShopFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setHasFixedSize(true);
-
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-        itemsList.add(new Item(null, "T-shirt (S)", "10.99$"));
-
         recyclerView.setAdapter(new ShopFragmentAdapter(itemsList, getContext()));
 
         return view;

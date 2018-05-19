@@ -1,5 +1,6 @@
 package com.project.swagkennels.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.project.swagkennels.presenters.NewsPresenter;
 import com.project.swagkennels.presenters.NewsPresenterImpl;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DogsFragment extends Fragment implements DogsPresenter.DogsView {
 
@@ -28,11 +30,12 @@ public class DogsFragment extends Fragment implements DogsPresenter.DogsView {
     DogsFragmentAdapter adapter;
     ProgressBar progressBar;
     DogsPresenter presenter = null;
+    View view;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dogs, container, false);
+        view = inflater.inflate(R.layout.fragment_dogs, container, false);
         dogList = new ArrayList<>();
         setUpView(view);
         showProgress(true);
@@ -70,6 +73,18 @@ public class DogsFragment extends Fragment implements DogsPresenter.DogsView {
 
     @Override
     public void displayNoData() {
-        //todo handle no dog situation;
+        setViewLayout(R.layout.empty_page);
+    }
+
+    private void setViewLayout(int id){
+        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater != null) {
+            view = inflater.inflate(id, null);
+            ViewGroup rootView = (ViewGroup) getView();
+            if (rootView != null) {
+                rootView.removeAllViews();
+                rootView.addView(view);
+            }
+        }
     }
 }

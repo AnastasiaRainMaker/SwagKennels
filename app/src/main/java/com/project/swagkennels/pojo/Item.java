@@ -8,12 +8,6 @@ public class Item {
 
     private String imageUrl;
 
-    public Item (String imageUrl, String description, String price) {
-        this.imageUrl = imageUrl;
-        this.description = description;
-        this.price = price;
-    }
-
     public String getPrice() {
         return price;
     }

@@ -10,13 +10,6 @@ public class News {
 
     private String youtubeLink;
 
-    public News(String imageLink, String date, String description, String youtubeLink) {
-        this.imageLink = imageLink;
-        this.date = date;
-        this.description = description;
-        this.youtubeLink = youtubeLink;
-    }
-
     public News() {}
 
     public String getImageLink() {
