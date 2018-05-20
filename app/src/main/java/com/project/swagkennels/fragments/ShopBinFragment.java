@@ -12,11 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.project.swagkennels.R;
-import com.project.swagkennels.activity.NewsListActivity;
 import com.project.swagkennels.adapters.ShopBinFragmentAdapter;
 import com.project.swagkennels.presenters.ShopBinPresenter;
 import com.project.swagkennels.presenters.ShopBinPresenterImpl;
@@ -33,6 +33,7 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
     private ShopBinPresenter presenter;
     private AppCompatActivity mActivity;
     private TextView emptyCart, totalTextView;
+    private Button buyButton;
 
     @Override
     public void onAttach(Context context) {
@@ -67,6 +68,7 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
     }
 
     public void setUpViews(View view) {
+        buyButton = view.findViewById(R.id.buyButton);
         totalTextView = view.findViewById(R.id.textViewTotal);
         emptyCart = view.findViewById(R.id.textViewEmptyBin);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -82,6 +84,8 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
     public void displayData(ArrayList<PurchasedShopItem> data) {
         showProgress(false);
         emptyCart.setVisibility(View.INVISIBLE);
+        buyButton.setVisibility(View.VISIBLE);
+        totalTextView.setVisibility(View.VISIBLE);
         adapter.setData(data);
         adapter.notifyDataSetChanged();
         showTotalAmount();
@@ -98,7 +102,8 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
         showProgress(false);
         recyclerView.setVisibility(View.INVISIBLE);
         emptyCart.setVisibility(View.VISIBLE);
-        // todo hide bottom button
+        buyButton.setVisibility(View.GONE);
+        totalTextView.setVisibility(View.GONE);
     }
 
     @Override
