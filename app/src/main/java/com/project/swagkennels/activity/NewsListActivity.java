@@ -81,6 +81,19 @@ public class NewsListActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_news, new ShopBinFragment(), "shopBinFragment")
                 .commit();
+        uncheckBottomNavView(bottomNavigationView);
+    }
+
+    private void uncheckBottomNavView(BottomNavigationView bottomNavigationView){
+        if (bottomNavigationView != null) {
+            Menu menu = bottomNavigationView.getMenu();
+            for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                menuItem.setChecked(false);
+               // menuItem.setCheckable(false);
+
+            }
+        }
     }
 
     private void setUpViews() {

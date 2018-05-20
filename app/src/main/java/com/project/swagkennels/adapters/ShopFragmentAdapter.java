@@ -69,17 +69,6 @@ public class ShopFragmentAdapter extends RecyclerView.Adapter<ShopFragmentAdapte
                     Intent intent = new Intent(context, ItemDetailsActivity.class);
 
                     intent.putExtra("item", item);
-
-                    //  intent.putExtra("imageUrl", "");
-//                    intent.putExtra("description", item.getDescription());
-//                    intent.putExtra("price", item.getPrice());
-//                    intent.putExtra("type", item.getType());
-//                    intent.putExtra("title", item.getTitle());
-//                    intent.putExtra("size", item.getSize());
-//                    intent.putExtra("available", item.getAvailable());
-//                    intent.putExtra("image", item.getImageUrl());
-//                    intent.putExtra("key", item.getKey());
-
                     String transitionName = context.getString(R.string.transition_shared_element);
 
                     ActivityOptionsCompat options =

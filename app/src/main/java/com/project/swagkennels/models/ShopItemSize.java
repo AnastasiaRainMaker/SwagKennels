@@ -3,7 +3,7 @@ package com.project.swagkennels.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class ShopItemSize implements Parcelable {
+public class ShopItemSize implements Parcelable {
 
     private String name;
     private Integer count;

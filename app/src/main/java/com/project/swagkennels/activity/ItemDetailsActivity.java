@@ -1,31 +1,44 @@
 package com.project.swagkennels.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.swagkennels.R;
 import com.project.swagkennels.models.Item;
+import com.project.swagkennels.models.ShopItemSize;
 import com.project.swagkennels.repository.RoomRepository;
 import com.project.swagkennels.room.PurchasedShopItem;
-
 import java.util.ArrayList;
 
 public class ItemDetailsActivity extends AppCompatActivity{
-    Toolbar toolbar;
-    ImageView imageView;
-    TextView descriptionView;
-    TextView priceView;
-    Spinner spinner;
-    ArrayList<String> sizes;
-    private Item item = null;
+    private Toolbar toolbar;
+    private ImageView imageView;
+    private TextView descriptionView;
+    private TextView priceView;
+    private TextView quantityStrView;
+    private TextView availableCountView;
+    private EditText orderCountView;
+    private Spinner spinner;
+    private ArrayList<ShopItemSize> sizesItems;
+    private ArrayList<String> availSizes;
+    private Item item;
+    private String availCountStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,52 +46,100 @@ public class ItemDetailsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_item_details);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        sizes = new ArrayList<>();
+        sizesItems = new ArrayList<>();
+        availSizes = new ArrayList<>();
         imageView = findViewById(R.id.image);
         descriptionView = findViewById(R.id.description);
         priceView = findViewById(R.id.price);
         spinner = findViewById(R.id.sizes_spinner);
+        quantityStrView = findViewById(R.id.quantityStr);
+        availableCountView = findViewById(R.id.available_count);
+        orderCountView = findViewById(R.id.order_quantity);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-
         if (extras != null){
             item = extras.getParcelable("item");
         } else {
-            // todo handle -> finish
+            finish();
         }
 
-        if (extras != null) {
-            String imgUrl = extras.getString("imageUrl",null);
-            if (imgUrl == null) {
-                imageView.setBackgroundResource(R.drawable.no_item_image);
-            } else {
-                //handle image url
-            }
-            String description = extras.getString("description", null);
-            if (description == null) {
-                descriptionView.setVisibility(View.GONE);
-            } else {
-                descriptionView.setText(description);
-            }
-            String date = extras.getString("date", null);
+        if (item != null) {
 
-            String price = extras.getString("price", null);
-            if (price == null) {
-                priceView.setVisibility(View.GONE);
-            } else {
-                priceView.setText(price);
+            sizesItems = item.getSize();
+            for (ShopItemSize size : sizesItems) {
+                availSizes.add(size.getName());
             }
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.placeholder(new ColorDrawable(imageView.getContext().getResources().getColor(R.color.lightGrey)));
+            requestOptions = requestOptions.error(getResources().getDrawable(R.drawable.no_item_image));
+            requestOptions = requestOptions.centerCrop();
+
+            Glide.with(imageView.getContext())
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(item.getImageUrl())
+                    .into(imageView);
+
+            quantityStrView.setVisibility(View.INVISIBLE);
+            availableCountView.setVisibility(View.INVISIBLE);
+            orderCountView.setVisibility(View.INVISIBLE);
+            priceView.setText(item.getPrice());
+            descriptionView.setText(item.getDescription());
+
         }
-        sizes.add("Size");
-        sizes.add("S");
-        sizes.add("M");
-        ArrayAdapter<String> adapter = new ArrayAdapter<> (this, android.R.layout.simple_spinner_item, sizes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<> (this, android.R.layout.simple_spinner_item, availSizes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
         // todo
+        addToRoom();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                quantityStrView.setVisibility(View.VISIBLE);
+                availableCountView.setVisibility(View.VISIBLE);
+                orderCountView.setVisibility(View.VISIBLE);
+                availCountStr = null;
+                if(item != null) {
+                    for (ShopItemSize size : sizesItems) {
+                        if (spinner.getItemAtPosition(i) == size.getName()) {
+                            availCountStr = size.getName();
+                            availableCountView.setText(availCountStr);
+                        }
+                    }
+
+                    orderCountView.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if (Integer.valueOf(editable.toString()) > Integer.valueOf(availCountStr)) {
+                                orderCountView.setTextColor(getResources().getColor(R.color.red));
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+
+    private void addToRoom() {
         final RoomRepository roomRepository = new RoomRepository(getApplication());
 
         Button submitButton = findViewById(R.id.add_to_cart_button);

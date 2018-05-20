@@ -3,8 +3,6 @@ package com.project.swagkennels.room;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-
-import static com.project.swagkennels.Constants.PURCHASED_ITEMS_TABLE_NAME;
 import static com.project.swagkennels.Constants.PURCHASED_ITEM_IMAGE;
 import static com.project.swagkennels.Constants.PURCHASED_ITEM_KEY;
 import static com.project.swagkennels.Constants.PURCHASED_ITEM_NAME;
