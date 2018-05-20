@@ -6,4 +6,7 @@
     <string name="empty_page_str">Sorry, the page is not available! Check your Internet connection and try again later!</string>
     <string name="the_bin_is_empty">The cart is empty.</string>
     <string name="no_items">No available news.</string>
+    <string name="msg_remove_item">Do you want to remove this item?</string>
+    <string name="msg_exit">Do you want to leave?</string>
+    <string name="msg_total">Total: %s$, %s items</string>
 </resources>

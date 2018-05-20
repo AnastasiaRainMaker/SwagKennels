@@ -1,7 +1,6 @@
 package com.project.swagkennels.repository;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.project.swagkennels.room.AppDatabase;
@@ -15,12 +14,10 @@ import io.reactivex.Flowable;
 public class RoomRepository {
 
     private PurchasedShopItemDao mPurchasedShopItemDao;
-//    private LiveData<List<PurchasedShopItem>> mAllPurchasedItems;
 
     public RoomRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         mPurchasedShopItemDao = db.purchasedShopItemDao();
-//        mAllPurchasedItems = mPurchasedShopItemDao.getAllPurchasedItems();
     }
 
     public Flowable<List<PurchasedShopItem>> getAllPurchasedItems() {
@@ -30,6 +27,10 @@ public class RoomRepository {
 
     public void insert (PurchasedShopItem item) {
         new insertAsyncTask(mPurchasedShopItemDao).execute(item);
+    }
+
+    public void removePurchasedShopItem(PurchasedShopItem item) {
+        new removeAsyncTask(mPurchasedShopItemDao).execute(item);
     }
 
     private static class insertAsyncTask extends AsyncTask<PurchasedShopItem, Void, Void> {
@@ -43,6 +44,21 @@ public class RoomRepository {
         @Override
         protected Void doInBackground(final PurchasedShopItem... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class removeAsyncTask extends AsyncTask<PurchasedShopItem, Void, Void> {
+
+        private PurchasedShopItemDao mAsyncTaskDao;
+
+        removeAsyncTask(PurchasedShopItemDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final PurchasedShopItem... params) {
+            mAsyncTaskDao.delete(params[0]);
             return null;
         }
     }

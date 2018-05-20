@@ -1,6 +1,5 @@
 package com.project.swagkennels.adapters;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -20,27 +19,31 @@ import java.util.ArrayList;
 
 public class ShopBinFragmentAdapter extends RecyclerView.Adapter<ShopBinFragmentAdapter.ViewHolder> {
     private ArrayList<PurchasedShopItem> dataList;
-    private Context context;
+    private ShopBinAdapterCallback listener;
 
-    public ShopBinFragmentAdapter(ArrayList<PurchasedShopItem> data, Context context) {
+    public ShopBinFragmentAdapter(ArrayList<PurchasedShopItem> data, ShopBinAdapterCallback listener) {
         this.dataList = data;
-        this.context = context;
+        this.listener = listener;
     }
 
     public void setData(ArrayList<PurchasedShopItem> data) {
         this.dataList = data;
     }
 
+    public void removeItem(PurchasedShopItem item) {
+        dataList.remove(item);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textViewTitle;
-        TextView textViewSize;
-        TextView textViewPrice;
+        ImageView imageView, imageViewBin;
+        TextView textViewTitle, textViewSize, textViewPrice;
         CardView card;
 
         ViewHolder(View itemView) {
             super(itemView);
             this.imageView = itemView.findViewById(R.id.imageView);
+            this.imageViewBin = itemView.findViewById(R.id.imageViewBin);
             this.textViewTitle = itemView.findViewById(R.id.textViewTitle);
             this.textViewSize = itemView.findViewById(R.id.textViewSize);
             this.textViewPrice = itemView.findViewById(R.id.textViewPrice);
@@ -52,7 +55,6 @@ public class ShopBinFragmentAdapter extends RecyclerView.Adapter<ShopBinFragment
     @Override
     public ShopBinFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_item_recyclerview_item, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -61,10 +63,10 @@ public class ShopBinFragmentAdapter extends RecyclerView.Adapter<ShopBinFragment
         final PurchasedShopItem item = dataList.get(position);
         if(item != null) {
 
-            holder.card.setOnClickListener(new View.OnClickListener() {
+            holder.imageViewBin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // todo
+                    listener.onBinIconClicked(item);
                 }
             });
 
@@ -103,6 +105,10 @@ public class ShopBinFragmentAdapter extends RecyclerView.Adapter<ShopBinFragment
     @Override
     public int getItemCount() {
         return dataList.size();
+    }
+
+    public interface ShopBinAdapterCallback {
+        void onBinIconClicked(PurchasedShopItem item);
     }
 }
 

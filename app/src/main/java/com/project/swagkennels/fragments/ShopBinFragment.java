@@ -1,9 +1,11 @@
 package com.project.swagkennels.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.project.swagkennels.R;
-import com.project.swagkennels.adapters.NewsFragmentAdapter;
+import com.project.swagkennels.activity.NewsListActivity;
 import com.project.swagkennels.adapters.ShopBinFragmentAdapter;
-import com.project.swagkennels.models.News;
-import com.project.swagkennels.presenters.NewsPresenter;
 import com.project.swagkennels.presenters.ShopBinPresenter;
 import com.project.swagkennels.presenters.ShopBinPresenterImpl;
 import com.project.swagkennels.repository.RoomRepository;
@@ -25,14 +25,14 @@ import com.project.swagkennels.room.PurchasedShopItem;
 
 import java.util.ArrayList;
 
-public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBinView {
+public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBinView, ShopBinFragmentAdapter.ShopBinAdapterCallback {
 
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
-    ShopBinFragmentAdapter adapter;
-    ShopBinPresenter presenter;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private ShopBinFragmentAdapter adapter;
+    private ShopBinPresenter presenter;
     private AppCompatActivity mActivity;
-    private TextView emptyCart;
+    private TextView emptyCart, totalTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -51,6 +51,12 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.onDestroy();
+    }
+
     public void showProgress(Boolean value) {
         if (value && progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
@@ -61,13 +67,14 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
     }
 
     public void setUpViews(View view) {
+        totalTextView = view.findViewById(R.id.textViewTotal);
         emptyCart = view.findViewById(R.id.textViewEmptyBin);
         recyclerView = view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.progressBarLoading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ShopBinFragmentAdapter(new ArrayList<PurchasedShopItem>(), getContext());
+        adapter = new ShopBinFragmentAdapter(new ArrayList<PurchasedShopItem>(), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -77,6 +84,13 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
         emptyCart.setVisibility(View.INVISIBLE);
         adapter.setData(data);
         adapter.notifyDataSetChanged();
+        showTotalAmount();
+    }
+
+    private void showTotalAmount() {
+        Integer totalAmount = presenter.getTotalAmount();
+        Float totalPrice = presenter.getTotalAmountPrice();
+        totalTextView.setText(String.format(getString(R.string.msg_total), totalPrice, totalAmount));
     }
 
     @Override
@@ -84,5 +98,36 @@ public class ShopBinFragment extends Fragment implements ShopBinPresenter.ShopBi
         showProgress(false);
         recyclerView.setVisibility(View.INVISIBLE);
         emptyCart.setVisibility(View.VISIBLE);
+        // todo hide bottom button
     }
+
+    @Override
+    public void onItemRemoved(PurchasedShopItem item) {
+        adapter.removeItem(item);
+    }
+
+    private void showRemoveItemDialog(final PurchasedShopItem item) {
+        AlertDialog alertDialog = new AlertDialog.Builder(mActivity, R.style.MyDialogTheme).create();
+        alertDialog.setMessage(getString(R.string.msg_remove_item));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        presenter.removeItem(item);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBinIconClicked(PurchasedShopItem item) {
+        showRemoveItemDialog(item);
+    }
+
 }

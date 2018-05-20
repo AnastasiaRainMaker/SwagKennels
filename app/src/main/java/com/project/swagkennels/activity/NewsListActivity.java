@@ -41,6 +41,7 @@ public class NewsListActivity extends AppCompatActivity {
     private Fragment fragment;
     private  String screenType = "";
     private final CompositeDisposable disposables = new CompositeDisposable();
+    private BottomNavigationViewEx bottomNavigationView;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -111,7 +112,7 @@ public class NewsListActivity extends AppCompatActivity {
     }
 
     public void setUpBottomNav() {
-        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.enableAnimation(true);
         bottomNavigationView.enableShiftingMode(false);
         bottomNavigationView.enableItemShiftingMode(false);
@@ -186,7 +187,7 @@ public class NewsListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog alertDialog = new AlertDialog.Builder(NewsListActivity.this, R.style.MyDialogTheme).create();
-        alertDialog.setMessage("Do you want to leave?");
+        alertDialog.setMessage(getString(R.string.msg_exit));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
