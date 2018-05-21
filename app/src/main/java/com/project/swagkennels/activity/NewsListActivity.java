@@ -173,6 +173,13 @@ public class NewsListActivity extends AppCompatActivity {
                                    fragmentManager.beginTransaction()
                                            .replace(R.id.frame_news, fragment, "shopFragment")
                                            .commit();
+                               } else {
+                                   if (getCurrentNavId() != 4) {
+                                       fragment = new ShopFragment();
+                                       fragmentManager.beginTransaction()
+                                               .replace(R.id.frame_news, fragment, "shopFragment")
+                                               .commit();
+                                   }
                                }
                                break;
                        }

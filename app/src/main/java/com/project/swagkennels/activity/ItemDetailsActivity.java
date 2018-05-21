@@ -39,6 +39,7 @@ public class ItemDetailsActivity extends AppCompatActivity{
     private ArrayList<String> availSizes;
     private Item item;
     private String availCountStr;
+    private Button addToCartBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class ItemDetailsActivity extends AppCompatActivity{
         quantityStrView = findViewById(R.id.quantityStr);
         availableCountView = findViewById(R.id.available_count);
         orderCountView = findViewById(R.id.order_quantity);
+        addToCartBtn = findViewById(R.id.add_to_cart_button);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -65,9 +67,10 @@ public class ItemDetailsActivity extends AppCompatActivity{
         }
 
         if (item != null) {
-
+            availSizes.add("Size");
             sizesItems = item.getSize();
             for (ShopItemSize size : sizesItems) {
+                if(size != null)
                 availSizes.add(size.getName());
             }
 
@@ -102,11 +105,18 @@ public class ItemDetailsActivity extends AppCompatActivity{
                 availableCountView.setVisibility(View.VISIBLE);
                 orderCountView.setVisibility(View.VISIBLE);
                 availCountStr = null;
+                if (spinner.getItemAtPosition(i).equals("Size")) {
+                    orderCountView.setFocusable(false);
+                    orderCountView.setClickable(false);
+                } else {
+                    orderCountView.setFocusableInTouchMode(true);
+                    orderCountView.setClickable(true);
+                }
                 if(item != null) {
                     for (ShopItemSize size : sizesItems) {
-                        if (spinner.getItemAtPosition(i) == size.getName()) {
-                            availCountStr = size.getName();
-                            availableCountView.setText(availCountStr);
+                        if (size != null && spinner.getItemAtPosition(i) == size.getName()) {
+                            availCountStr = size.getCount().toString();
+                            availableCountView.setText(availCountStr + " available");
                         }
                     }
 
@@ -123,8 +133,15 @@ public class ItemDetailsActivity extends AppCompatActivity{
 
                         @Override
                         public void afterTextChanged(Editable editable) {
-                            if (Integer.valueOf(editable.toString()) > Integer.valueOf(availCountStr)) {
+                            if (!editable.toString().equals("") && Integer.valueOf(editable.toString()) > Integer.valueOf(availCountStr)) {
                                 orderCountView.setTextColor(getResources().getColor(R.color.red));
+                                addToCartBtn.setClickable(false);
+                                addToCartBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                            } else {
+                                orderCountView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                addToCartBtn.setClickable(true);
+                                addToCartBtn.setTextColor(getResources().getColor(R.color.colorAccent));
                             }
                         }
                     });
