@@ -60,10 +60,14 @@ public class NotificationsJobService extends JobService {
             NotificationChannel channel = new NotificationChannel(channelId,
                     "Channel swagkennels",
                     NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }
     }
 
     private void wakeDeviceIfTheScreenOff() {

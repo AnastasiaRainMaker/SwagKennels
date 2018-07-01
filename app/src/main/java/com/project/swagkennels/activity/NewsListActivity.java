@@ -3,6 +3,8 @@ package com.project.swagkennels.activity;
 import android.annotation.SuppressLint;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.project.swagkennels.R;
@@ -168,19 +171,33 @@ public class NewsListActivity extends AppCompatActivity {
                                }
                                break;
                            case R.id.action_shop:
-                               if(!item.isChecked()) {
-                                   fragment = new ShopFragment();
-                                   fragmentManager.beginTransaction()
-                                           .replace(R.id.frame_news, fragment, "shopFragment")
-                                           .commit();
-                               } else {
-                                   if (getCurrentNavId() != 4) {
-                                       fragment = new ShopFragment();
-                                       fragmentManager.beginTransaction()
-                                               .replace(R.id.frame_news, fragment, "shopFragment")
-                                               .commit();
+                               item.setChecked(false);
+                               Toast.makeText(NewsListActivity.this, "Sorry, this section is still in progress", Toast.LENGTH_SHORT).show();
+                               int[][] states = new int[][]{
+                                           new int[]{-android.R.attr.state_checked},
+                                   };
+
+                                   int[] colors = new int[]{
+                                           getResources().getColor(R.color.lightGrey),
+                                   };
+
+                                   ColorStateList navigationViewColorStateList = new ColorStateList(states, colors);
+                                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                       item.setIconTintList(navigationViewColorStateList);
                                    }
-                               }
+//
+//                               if(!item.isChecked()) {
+//
+////                                   fragment = new ShopFragment();
+////                                   fragmentManager.beginTransaction()
+////                                           .replace(R.id.frame_news, fragment, "shopFragment")
+////                                           .commit();
+//                               } else if (getCurrentNavId() != 4) {
+///
+////                                       fragment = new ShopFragment();
+////                                       fragmentManager.beginTransaction()
+////                                               .replace(R.id.frame_news, fragment, "shopFragment")
+////                                               .commit();
                                break;
                        }
                        return true;

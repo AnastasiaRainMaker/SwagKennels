@@ -42,7 +42,7 @@
                 android:src="@drawable/ic_shop_toolbar"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:paddingStart="0dp"
+                android:paddingStart="22dp"
                 android:paddingEnd="0dp"
                 android:layout_height="wrap_content" />
 
