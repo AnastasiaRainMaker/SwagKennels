@@ -70,7 +70,6 @@ public class ItemDetailsActivity extends AppCompatActivity{
             availSizes.add("Size");
             sizesItems = item.getSize();
             for (ShopItemSize size : sizesItems) {
-                if(size != null)
                 availSizes.add(size.getName());
             }
 

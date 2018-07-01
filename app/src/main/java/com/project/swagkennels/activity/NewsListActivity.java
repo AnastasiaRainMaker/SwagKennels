@@ -2,7 +2,9 @@ package com.project.swagkennels.activity;
 
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.PaymentData;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.project.swagkennels.R;
 import com.project.swagkennels.fragments.BreedingFragment;
@@ -31,12 +37,36 @@ import com.project.swagkennels.fragments.ShopFragment;
 import com.project.swagkennels.repository.RoomRepository;
 import com.project.swagkennels.room.PurchasedShopItem;
 
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.project.swagkennels.fragments.ShopBinFragment.LOAD_PAYMENT_DATA_REQUEST_CODE;
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -52,6 +82,12 @@ public class NewsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         setUpViews();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TAG", "OnStop");
     }
 
     private void setUpBinIcon(final TextView shopBinButton, ImageView shopBinImage) {
@@ -244,7 +280,172 @@ public class NewsListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("TAG", "OnDestroy");
         disposables.clear();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("TAG", "OnPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG", "onResume");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case LOAD_PAYMENT_DATA_REQUEST_CODE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        PaymentData paymentData = PaymentData.getFromIntent(data);
+                        final String token = paymentData.getPaymentMethodToken().getToken();
+                        Completable task = Completable.fromCallable(new Callable<Object>() {
+                            @Override
+                            public Object call() throws Exception {
+                                sendPaymentProcessorRequest2(token);
+                                return null;
+                            }
+                        });
+                        task.subscribeOn(Schedulers.io()).subscribe();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        break;
+                    case AutoResolveHelper.RESULT_ERROR:
+                        Status status = AutoResolveHelper.getStatusFromIntent(data);
+                        // Log the status for debugging.
+                        // Generally, there is no need to show an error to
+                        // the user as the Google Pay API will do that.
+                        break;
+                    default:
+                        // Do nothing.
+                }
+                break;
+            default:
+                // Do nothing.
+        }
+    }
+
+    private void sendPaymentProcessorRequest2(String token) {
+    }
+
+    private void sendPaymentProcessorRequest(String token){
+
+        try {
+
+            URL url = new URL ("https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise");
+            JSONObject postDataParams = new JSONObject();
+            postDataParams.put("name", "abc");
+            postDataParams.put("email", "abc@gmail.com");
+            Log.e("params",postDataParams.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            JSONObject jsonParam = new JSONObject();
+            JSONObject amount = new JSONObject();
+            amount.put("value", "1");
+            amount.put("currency", "USD");
+            JSONObject additionalData = new JSONObject();
+            additionalData.put("paywithgoogle.token", token);
+            jsonParam.put("reference", "adyen");
+            jsonParam.put("TestMerchant", "N1989Account015");
+            jsonParam.put("amount", amount);
+            jsonParam.put("additionalData", additionalData);
+            writer.write(jsonParam.toString());
+
+            writer.flush();
+            writer.close();
+            os.close();
+
+            int responseCode=conn.getResponseCode();
+
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                BufferedReader in=new BufferedReader(new
+                        InputStreamReader(
+                        conn.getInputStream()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line="";
+
+                while((line = in.readLine()) != null) {
+
+                    sb.append(line);
+                    break;
+                }
+
+                in.close();
+                String s =  sb.toString();
+
+            }
+            else {
+                String s = "false : " + responseCode;
+            }
+        }
+        catch(Exception e){
+            String s = "Exception: " + e.getMessage();
+        }
+
+//            URLConnection urlConn;
+//            DataOutputStream printout;
+//            DataInputStream input;
+//            URL url = new URL ("https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise");
+//            urlConn = url.openConnection();
+//            urlConn.setDoInput (true);
+//            urlConn.setDoOutput (true);
+//            urlConn.setUseCaches (false);
+//            urlConn.setRequestProperty("Content-Type","application/json");
+////            urlConn.setRequestProperty("Host", "android.schoolportal.gr");
+//            urlConn.connect();
+//            //Create JSONObject here
+//            JSONObject jsonParam = new JSONObject();
+//            JSONObject amount = new JSONObject();
+//            amount.put("value", "1");
+//            amount.put("currency", "USD");
+//            JSONObject additionalData = new JSONObject();
+//            additionalData.put("paywithgoogle.token", token);
+//            jsonParam.put("reference", "adyen");
+//            jsonParam.put("TestMerchant", "N1989Account015");
+//            jsonParam.put("amount", amount);
+//            jsonParam.put("additionalData", additionalData);
+//            printout = new DataOutputStream(urlConn.getOutputStream ());
+//            printout.writeBytes(URLEncoder.encode(jsonParam.toString(),"UTF-8"));
+//            printout.flush ();
+////            printout.close ();
+//
+//
+//
+//            InputStream inputStream = urlConn.getInputStream();
+////input stream
+//            StringBuffer buffer = new StringBuffer();
+//
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//
+//            String inputLine;
+//            while ((inputLine = reader.readLine()) != null)
+//                buffer.append(inputLine + "\n");
+//            if (buffer.length() == 0) {
+//                // Stream was empty. No point in parsing.
+//                return;
+//            }
+//            String JsonResponse = buffer.toString();
+//            reader.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
