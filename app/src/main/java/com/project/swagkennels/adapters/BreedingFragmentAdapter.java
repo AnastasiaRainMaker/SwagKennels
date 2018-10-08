@@ -67,7 +67,7 @@ public class BreedingFragmentAdapter extends RecyclerView.Adapter<BreedingFragme
             });
 
             if(item.getImageUrlMale() == null) {
-                holder.imageViewMale.setBackgroundResource(R.drawable.dog_img);
+                holder.imageViewMale.setBackgroundResource(R.mipmap.splash_logo);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageViewMale.getContext().getResources().getColor(R.color.lightGrey)));
@@ -80,7 +80,7 @@ public class BreedingFragmentAdapter extends RecyclerView.Adapter<BreedingFragme
                         .into(holder.imageViewMale);
             }
             if(item.getImageUrlFemale() == null) {
-                holder.imageViewFemale.setBackgroundResource(R.drawable.dog_img);
+                holder.imageViewFemale.setBackgroundResource(R.mipmap.splash_logo);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageViewFemale.getContext().getResources().getColor(R.color.lightGrey)));

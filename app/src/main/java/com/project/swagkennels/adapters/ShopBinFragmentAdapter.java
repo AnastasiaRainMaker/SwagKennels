@@ -71,7 +71,7 @@ public class ShopBinFragmentAdapter extends RecyclerView.Adapter<ShopBinFragment
             });
 
             if(item.getImage() == null) {
-                holder.imageView.setBackgroundResource(R.drawable.dog_img);
+                holder.imageView.setBackgroundResource(R.mipmap.splash_logo);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));

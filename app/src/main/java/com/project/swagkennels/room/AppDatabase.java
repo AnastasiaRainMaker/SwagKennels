@@ -7,7 +7,7 @@ import android.content.Context;
 
 import static com.project.swagkennels.Constants.DB_NAME;
 
-@Database(entities = {PurchasedShopItem.class}, version = 1)
+@Database(entities = {PurchasedShopItem.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract PurchasedShopItemDao purchasedShopItemDao();

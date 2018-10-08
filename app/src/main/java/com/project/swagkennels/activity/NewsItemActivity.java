@@ -35,7 +35,7 @@ public class NewsItemActivity extends AppCompatActivity {
         if (extras != null) {
             String imgUrl = extras.getString("imageUrl",null);
             if (imgUrl == null) {
-                imageView.setBackgroundResource(R.drawable.dog_img);
+                imageView.setBackgroundResource(R.mipmap.splash_logo);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(imageView.getContext().getResources().getColor(R.color.lightGrey)));

@@ -57,7 +57,7 @@ public class PuppyFragmentAdapter extends RecyclerView.Adapter<PuppyFragmentAdap
         final Puppy item = dataList.get(position);
         if(item != null) {
             if(item.getImageUrl() == null) {
-                holder.imageView.setBackgroundResource(R.drawable.dog_img);
+                holder.imageView.setBackgroundResource(R.mipmap.splash_logo);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions = requestOptions.placeholder(new ColorDrawable(holder.imageView.getContext().getResources().getColor(R.color.lightGrey)));
